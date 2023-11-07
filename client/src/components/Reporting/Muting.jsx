@@ -1,24 +1,24 @@
 import React, { useState } from "react";
-import { BsFlag } from "react-icons/bs";
+import { BsMicMute } from "react-icons/bs";
 import { message } from "antd";
 
-export default function FlagButton({ user, classroomId, isAdmin }) {
+export default function MuteButton({ user, classroomId, isAdmin }) {
   // Todo: fetch flags from database using classroomId, do not initialize to 0
   const [flags, setFlags] = useState(0);
   let threshold = 5;
 
   function mute(user) {
     // Todo: Implement the mute functionality here, making a request to the backend
-    console.log("user flagged");
+    console.log("user muted");
     // Show a message
-    message.success(`User ${user} has been flagged.`);
+    message.success(`User ${user} has been muted.`);
   }
 
   function unMute(user) {
     // Todo: Implement the unmute functionality here, making a request to the backend
-    console.log("user unflagged");
+    console.log("user unmuted");
     // Show a message
-    message.success(`User ${user} has been unflagged.`);
+    message.success(`User ${user} has been unmuted.`);
   }
 
   function handleClick() {
@@ -44,7 +44,7 @@ export default function FlagButton({ user, classroomId, isAdmin }) {
   }
 
   return (
-    <BsFlag
+    <BsMicMute
       id="flag"
       style={{
         width: "15px",
@@ -53,7 +53,7 @@ export default function FlagButton({ user, classroomId, isAdmin }) {
         cursor: "pointer",
       }}
       onClick={handleClick}
-      title={flags >= threshold ? "User has been flagged" : "Flag user"}
+      title={flags >= threshold ? "User has been muted" : "Flag user"}
     />
   );
 }
