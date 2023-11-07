@@ -9,6 +9,21 @@ export default function FlagButton({ user, classroomId, isAdmin }) {
 
   function mute(user) {
     // Todo: Implement the mute functionality here, making a request to the backend
+    
+    /*
+    const student = await User.findOne({
+      where: {
+        user: user,
+      },
+    });
+
+    if (student) {
+      await student.update({
+        isMuted: true,
+      });
+    }
+    */
+
     console.log("user muted");
     // Show a message
     message.success(`User ${user} has been muted.`);
@@ -16,6 +31,21 @@ export default function FlagButton({ user, classroomId, isAdmin }) {
 
   function unMute(user) {
     // Todo: Implement the unmute functionality here, making a request to the backend
+
+    /*
+    const student = await User.findOne({
+      where: {
+        user: user,
+      },
+    });
+
+    if (student) {
+      await student.update({
+        isMuted: false,
+      });
+    }
+    */
+
     console.log("user unmuted");
     // Show a message
     message.success(`User ${user} has been unmuted.`);

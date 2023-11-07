@@ -8,6 +8,8 @@ import Home from './Home/Home';
 import Reports from './Reports/Reports';
 import SavedWorkSpaceTab from '../../../components/Tabs/SavedWorkspaceTab';
 import { useSearchParams, useParams } from 'react-router-dom';
+import { Sequelize } from '@sequelize/core';
+//import 'dotenv/config';
 
 const { TabPane } = Tabs;
 
@@ -16,6 +18,10 @@ export default function Classroom({
   selectedActivity,
   setSelectedActivity,
 }) {
+  //const sequelize = new Sequelize(process.env.API_URL);
+
+  
+
   const [searchParams, setSearchParams] = useSearchParams();
 
   const { id } = useParams();
