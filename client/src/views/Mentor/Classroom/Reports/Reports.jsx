@@ -1,5 +1,6 @@
 import React from "react";
 import FlagButton from "../../../../components/Reporting/Flagging";
+import MuteButton from "../../../../components/Reporting/Muting";
 import { Table } from "antd";
 
 export default function Reports({ classroomId }) {
@@ -34,10 +35,21 @@ export default function Reports({ classroomId }) {
       key: "reason",
     },
     {
-      title: "Actions",
+      title: "Flag User",
       key: "actions",
       render: (text, record) => (
         <FlagButton
+          user={record.user}
+          classroomId={classroomId}
+          isAdmin={true}
+        />
+      ),
+    },
+    {
+      title: "Mute User",
+      key: "actions",
+      render: (text, record) => (
+        <MuteButton
           user={record.user}
           classroomId={classroomId}
           isAdmin={true}
