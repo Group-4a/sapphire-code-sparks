@@ -34,17 +34,17 @@ export default function Reports({ classroomId }) {
       dataIndex: "reason",
       key: "reason",
     },
-    {
-      title: "Flag User",
-      key: "actions",
-      render: (text, record) => (
-        <FlagButton
-          user={record.user}
-          classroomId={classroomId}
-          isAdmin={true}
-        />
-      ),
-    },
+    // {
+    //   title: "Flag User",
+    //   key: "actions",
+    //   render: (text, record) => (
+    //     <FlagButton
+    //       user={record.user}
+    //       classroomId={classroomId}
+    //       isAdmin={true}
+    //     />
+    //   ),
+    // },
     {
       title: "Mute User",
       key: "actions",

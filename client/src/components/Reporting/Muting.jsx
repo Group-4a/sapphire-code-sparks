@@ -49,7 +49,7 @@ export default function MuteButton({ user, classroomId, isAdmin }) {
       style={{
         width: "15px",
         height: "15px",
-        color: flags >= threshold ? "grey" : "red",
+        color: flags >= threshold ? "red" : "grey",
         cursor: "pointer",
       }}
       onClick={handleClick}
