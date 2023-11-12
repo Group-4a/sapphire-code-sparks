@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { BsMicMute } from "react-icons/bs";
 import { message } from "antd";
 
+import { getStudent } from '../../Utils/requests.js';
+
 export default function MuteButton({ user, classroomId, isAdmin }) {
   // Todo: fetch flags from database using classroomId, do not initialize to 0
   const [flags, setFlags] = useState(0);
@@ -9,7 +11,10 @@ export default function MuteButton({ user, classroomId, isAdmin }) {
 
   function mute(user) {
     // Todo: Implement the mute functionality here, making a request to the backend
-    console.log("user muted");
+    
+    //getStudent("49").then(res);
+    
+    console.log(user);
     // Show a message
     message.success(`User ${user} has been muted.`);
   }
