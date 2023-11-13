@@ -21,6 +21,7 @@ export default function FlagButton({ user, classroomId, isAdmin }) {
     message.success(`User ${user} has been unflagged.`);
   }
 
+  // Handles auto-muting and flag increments
   function handleClick() {
     if (isAdmin) {
       if (flags >= threshold) {

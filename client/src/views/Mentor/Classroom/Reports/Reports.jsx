@@ -6,6 +6,7 @@ import testImage from "../../../../assets/test.jpg";
 
 export default function Reports({ classroomId }) {
   // Change to fetch reportData from database using classroomId
+  // Filler data for now until backend is implemented
   const reportsData = [
     {
       key: "1",
@@ -24,6 +25,7 @@ export default function Reports({ classroomId }) {
     },
   ];
 
+  // Table columns
   const columns = [
     {
       title: "User",
@@ -34,26 +36,14 @@ export default function Reports({ classroomId }) {
       title: "Reason",
       dataIndex: "reason",
       key: "reason",
+      // Renders the flagged thumbnail if the reason is 'Inappropriate thumbnail'
       render: (text, record) => {
-        // Check if the reason is 'Inappropriate thumbnail' to display the image
         if (record.reason === 'Inappropriate thumbnail') {
           return <img src={testImage} alt="Inappropriate thumbnail" style={{ width: '50px', height: 'auto' }} />;
         }
-        // Otherwise, just display the text
         return text;
       },
     },
-    // {
-    //   title: "Flag User",
-    //   key: "actions",
-    //   render: (text, record) => (
-    //     <FlagButton
-    //       user={record.user}
-    //       classroomId={classroomId}
-    //       isAdmin={true}
-    //     />
-    //   ),
-    // },
     {
       title: "Mute User",
       key: "actions",
@@ -67,6 +57,7 @@ export default function Reports({ classroomId }) {
     },
   ];
 
+  // Renders the table from other components
   return (
     <div className="reports-container">
       <div id="page-header">
