@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { BsFlag } from "react-icons/bs";
 import { message } from "antd";
+import PropTypes from "prop-types";
 
 export default function FlagButton({ user, classroomId, isAdmin }) {
   // Todo: fetch flags from database using classroomId, do not initialize to 0
@@ -57,4 +58,10 @@ export default function FlagButton({ user, classroomId, isAdmin }) {
       title={flags >= threshold ? "User has been flagged" : "Flag user"}
     />
   );
+}
+
+Flagging.propTypes = {
+  user: PropTypes.string,
+  classroomId: PropTypes.number,
+  isAdmin: PropTypes.bool,
 }

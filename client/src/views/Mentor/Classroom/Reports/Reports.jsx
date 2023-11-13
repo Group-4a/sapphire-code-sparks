@@ -1,8 +1,8 @@
 import React from "react";
-import FlagButton from "../../../../components/Reporting/Flagging";
 import MuteButton from "../../../../components/Reporting/Muting";
 import { Table } from "antd";
 import testImage from "../../../../assets/test.jpg";
+import PropTypes from "prop-types";
 
 export default function Reports({ classroomId }) {
   // Change to fetch reportData from database using classroomId
@@ -69,3 +69,7 @@ export default function Reports({ classroomId }) {
     </div>
   );
 }
+
+Reports.propTypes = {
+  classroomId: PropTypes.number,
+};
