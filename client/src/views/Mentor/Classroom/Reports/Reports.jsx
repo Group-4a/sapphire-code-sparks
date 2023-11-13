@@ -49,7 +49,7 @@ export default function Reports({ classroomId }) {
       key: "actions",
       render: (text, record) => (
         <MuteButton
-          user={record.user}
+          user={record.key}
           classroomId={classroomId}
           isAdmin={true}
         />
