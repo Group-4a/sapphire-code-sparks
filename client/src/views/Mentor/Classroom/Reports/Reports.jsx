@@ -12,16 +12,19 @@ export default function Reports({ classroomId }) {
       key: "1",
       user: "John Doe",
       reason: "Inappropriate language",
+      muted: "Jane Smith, Bill Bob"
     },
     {
       key: "2",
       user: "Jane Smith",
       reason: "Inappropriate thumbnail",
+      muted: "None"
     },
     {
       key: "3",
       user: "Bill Bob",
       reason: "Bullying",
+      muted: "John Doe"
     },
   ];
 
@@ -54,6 +57,11 @@ export default function Reports({ classroomId }) {
           isAdmin={true}
         />
       ),
+    },
+    {
+      title: "Students Muted by User",
+      dataIndex: "muted",
+      key: "muted"
     },
   ];
 
