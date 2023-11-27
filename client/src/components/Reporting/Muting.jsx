@@ -1,28 +1,31 @@
 import React, { useState } from "react";
-import { BsFlag } from "react-icons/bs";
+import { BsMicMute } from "react-icons/bs";
 import { message } from "antd";
-import PropTypes from "prop-types";
 
-export default function FlagButton({ user, classroomId, isAdmin }) {
+import { getStudent } from '../../Utils/requests.js';
+
+export default function MuteButton({ user, classroomId, isAdmin }) {
   // Todo: fetch flags from database using classroomId, do not initialize to 0
   const [flags, setFlags] = useState(0);
   let threshold = 5;
 
   function mute(user) {
     // Todo: Implement the mute functionality here, making a request to the backend
-    console.log("user flagged");
+    
+    //getStudent("49").then(res);
+    
+    console.log(user);
     // Show a message
-    message.success(`User ${user} has been flagged.`);
+    message.success(`User ${user} has been muted.`);
   }
 
   function unMute(user) {
     // Todo: Implement the unmute functionality here, making a request to the backend
-    console.log("user unflagged");
+    console.log("user unmuted");
     // Show a message
-    message.success(`User ${user} has been unflagged.`);
+    message.success(`User ${user} has been unmuted.`);
   }
 
-  // Handles auto-muting and flag increments
   function handleClick() {
     if (isAdmin) {
       if (flags >= threshold) {
@@ -46,22 +49,16 @@ export default function FlagButton({ user, classroomId, isAdmin }) {
   }
 
   return (
-    <BsFlag
+    <BsMicMute
       id="flag"
       style={{
         width: "15px",
         height: "15px",
-        color: flags >= threshold ? "grey" : "red",
+        color: flags >= threshold ? "red" : "grey",
         cursor: "pointer",
       }}
       onClick={handleClick}
-      title={flags >= threshold ? "User has been flagged" : "Flag user"}
+      title={flags >= threshold ? "User has been muted" : "Flag user"}
     />
   );
-}
-
-Flagging.propTypes = {
-  user: PropTypes.string,
-  classroomId: PropTypes.number,
-  isAdmin: PropTypes.bool,
 }
