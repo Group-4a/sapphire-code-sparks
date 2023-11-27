@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import MuteButton from "../../../../components/Reporting/Muting";
-import { Table, Space, Tag } from "antd";
+import { Table, Space, Tag, Modal, Button } from "antd";
 import testImage from "../../../../assets/test.jpg";
 import PropTypes from "prop-types";
 
@@ -10,23 +10,28 @@ export default function Reports({ classroomId }) {
       key: "1",
       user: "John Doe",
       reason: "Inappropriate language",
+      post: "This is the post content for report 1.",
       muted: ["Jane Smith", "Bill Bob"],
     },
     {
       key: "2",
       user: "Jane Smith",
       reason: "Inappropriate thumbnail",
+      post: "This is the post content for report 2.",
       muted: [],
     },
     {
       key: "3",
       user: "Bill Bob",
       reason: "Bullying",
+      post: "This is the post content for report 3.",
       muted: ["John Doe"],
     },
   ]);
 
   const [hiddenMutedUsers, setHiddenMutedUsers] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedPost, setSelectedPost] = useState("");
 
   const updateMutedUsers = (userId, mutedUser) => {
     const updatedData = reportsData.map((report) => {
@@ -45,6 +50,15 @@ export default function Reports({ classroomId }) {
     } else {
       setHiddenMutedUsers([...hiddenMutedUsers, user]);
     }
+  };
+
+  const handleViewPostClick = (post) => {
+    setSelectedPost(post);
+    setModalVisible(true);
+  };
+
+  const handleModalCancel = () => {
+    setModalVisible(false);
   };
 
   const columns = [
@@ -69,6 +83,16 @@ export default function Reports({ classroomId }) {
         }
         return text;
       },
+    },
+    {
+      title: "View Post",
+      dataIndex: "post",
+      key: "post",
+      render: (text, record) => (
+        <Button onClick={() => handleViewPostClick(record.post)}>
+          View
+        </Button>
+      ),
     },
     {
       title: "Mute User",
@@ -120,6 +144,22 @@ export default function Reports({ classroomId }) {
       </div>
       <div id="content-creator-table-container" style={{ marginTop: "6.6vh" }}>
         <Table dataSource={reportsData} columns={columns} />
+
+        <Modal
+          title="Reported Post"
+          visible={modalVisible}
+          onCancel={handleModalCancel}
+          footer={null}
+        >
+          <p>
+            {selectedPost}
+            <img
+                  src={testImage}
+                  alt="Sample Image"
+                  style={{ width: "100%", height: "auto", marginTop: "10px" }}
+                />
+            </p>
+        </Modal>
       </div>
     </div>
   );
