@@ -90,7 +90,7 @@ export default function Reports({ classroomId }) {
       key: "post",
       render: (text, record) => (
         <Button onClick={() => handleViewPostClick(record.post)}>
-          View Post
+          View
         </Button>
       ),
     },
@@ -146,7 +146,7 @@ export default function Reports({ classroomId }) {
         <Table dataSource={reportsData} columns={columns} />
 
         <Modal
-          title="View Post"
+          title="Reported Post"
           visible={modalVisible}
           onCancel={handleModalCancel}
           footer={null}
@@ -154,7 +154,7 @@ export default function Reports({ classroomId }) {
           <p>
             {selectedPost}
             <img
-                  src={testImage} // Change this to the actual image source
+                  src={testImage}
                   alt="Sample Image"
                   style={{ width: "100%", height: "auto", marginTop: "10px" }}
                 />
