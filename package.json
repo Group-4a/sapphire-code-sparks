@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "bad-words": "^3.0.4"
+  },
+  "devDependencies": {
+    "@types/bad-words": "^3.0.3",
+    "@types/badwords": "^1.0.3"
+  }
+}
