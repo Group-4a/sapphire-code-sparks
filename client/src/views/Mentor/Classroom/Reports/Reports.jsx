@@ -4,8 +4,30 @@ import { Table, Space, Tag, Modal, Button } from "antd";
 import testImage from "../../../../assets/test.jpg";
 import PropTypes from "prop-types";
 
+// Backend API calls imports
+import { getReportCount, getReports } from '../../../../Utils/requests.js';
+let report_count = null;
+let reports_data = null;
+
+async function fetchReports() {
+
+  try {
+    reports_data = await getReports();
+    console.log('Received reports in Reports.jsx: ', reports_data);
+  } catch (error) {
+    console.error('Error fetching reports in Reports.jsx:', error);
+  }
+
+  console.log("Reports Variable : ", reports_data);
+}
+
 export default function Reports({ classroomId }) {
-  const [reportsData, setReportsData] = useState([
+  
+  fetchReports();
+  
+  console.log('WE GOOD:', reports_data);
+  
+  /*reports = [
     {
       key: "1",
       user: "John Doe",
@@ -27,7 +49,9 @@ export default function Reports({ classroomId }) {
       post: "This is the post content for report 3.",
       muted: ["John Doe"],
     },
-  ]);
+  ];*/
+
+  const [reportsData, setReportsData] = useState(reports_data);
 
   const [hiddenMutedUsers, setHiddenMutedUsers] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
@@ -106,7 +130,7 @@ export default function Reports({ classroomId }) {
         />
       ),
     },
-    {
+    /*{
       title: "Students Muted by User",
       dataIndex: "muted",
       key: "muted",
@@ -133,7 +157,7 @@ export default function Reports({ classroomId }) {
           )}
         </Space>
       ),
-    },
+    },*/
   ];
 
   // Renders the table from other components

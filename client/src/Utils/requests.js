@@ -47,6 +47,39 @@ const makeRequest = async ({ method, path, data, auth = false, error }) => {
   return { data: res, err: err };
 };
 
+// returns an INT of the number of reports in the system
+export async function getReports() {
+  
+  const url = 'http://localhost:1337/api/reports/';
+
+  const headers = {
+    'Content-Type': 'application/json',
+    'Connection': 'keep-alive',
+    'Authorization': `Bearer ${token}`,
+    'Keep-Alive': 'timeout=5'
+  };
+
+  const requestOptions = {
+    method: 'GET',
+    headers: headers
+  };
+
+  try {
+    const response = await fetch(url, requestOptions);
+
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status} - ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    console.log('Reports data:', data);
+    return data; // You can handle the data as needed
+  } catch (error) {
+    console.error('Error fetching reports data:', error);
+    // Handle errors appropriately
+    return null;
+  }
+}
 
 // returns an INT of the number of reports in the system
 export async function getReportCount() {
