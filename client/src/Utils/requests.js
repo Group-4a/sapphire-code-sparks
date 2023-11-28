@@ -7,6 +7,9 @@ const PUT = 'PUT';
 const POST = 'POST';
 const DELETE = 'DELETE';
 
+// Copy your token from http://localhost:1337/admin/plugins/documentation and paste it here
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzAxMTIxNzU1LCJleHAiOjE3MDM3MTM3NTV9.LZS9y-F8LB_3V30BlNU1fAyu5V6pHqwfxeI79pTwwT8'; 
+
 // all request functions should utilize makeRequest and return an obj with structure {data, err}
 const makeRequest = async ({ method, path, data, auth = false, error }) => {
   let res = null;
@@ -43,6 +46,131 @@ const makeRequest = async ({ method, path, data, auth = false, error }) => {
 
   return { data: res, err: err };
 };
+
+
+// returns an INT of the number of reports in the system
+export async function getReportCount() {
+  
+  const url = 'http://localhost:1337/api/reports/count';
+
+  const headers = {
+    'Content-Type': 'application/json',
+    'Connection': 'keep-alive',
+    'Authorization': `Bearer ${token}`
+  };
+
+  const requestOptions = {
+    method: 'GET',
+    headers: headers
+  };
+
+  try {
+    const response = await fetch(url, requestOptions);
+
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status} - ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    console.log('Count data:', data);
+    return data; // You can handle the data as needed
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    // Handle errors appropriately
+    return null;
+  }
+}
+
+// name == string
+// id == int
+// reason == string
+export async function createReport(name, id, reason) {
+
+  const url = 'http://localhost:1337/api/reports';
+
+  const data = {
+    "created_by": "Teacher",
+    "updated_by": "Teacher",
+    "student_name": name,
+    "student_id": id,
+    "report_reason": reason
+  };
+
+  const headers = {
+    'Accept': 'application/json',
+    'Authorization': `Bearer ${token}`,
+    'Connection': 'keep-alive',
+    'Content-Type': 'application/json',
+    'accept': 'application/json'
+  };
+
+  const requestOptions = {
+    method: 'POST',
+    headers: headers,
+    body: JSON.stringify(data)
+  };
+  
+
+  try {
+      console.log('Sending data:', requestOptions); // Log the data being sent
+    const response = await fetch(url, requestOptions);
+
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status} - ${response.statusText}`);
+    }
+
+    const responseData = await response.json();
+    console.log('Report sent successfully:', responseData);
+    // You can handle the response data as needed
+    return responseData;
+  } catch (error) {
+    console.error('Error sending report:', error);
+    // Handle errors appropriately
+    return null;
+  }
+}
+
+
+// This is a testing function please ignore it
+export async function getCountWithToken() {
+  
+  const url = 'http://localhost:1337/api/mods/count';
+
+  const headers = {
+    'Content-Type': 'application/json',
+    'Connection': 'keep-alive',
+    'Authorization': `Bearer ${token}`
+  };
+
+  const requestOptions = {
+    method: 'GET',
+    headers: headers
+  };
+
+  try {
+    const response = await fetch(url, requestOptions);
+
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status} - ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    console.log('Count data:', data);
+    return data; // You can handle the data as needed
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    // Handle errors appropriately
+    return null;
+  }
+}
+
+export const  getModCount = async () =>
+  makeRequest({
+    method: GET,
+    path: `${server}/mods/count`,
+    auth: true,
+    error: 'Mod could not be retrieved.',
+  });
 
 export const getActivities = async () =>
   makeRequest({
