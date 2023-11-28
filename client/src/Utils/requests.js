@@ -49,7 +49,7 @@ const makeRequest = async ({ method, path, data, auth = false, error }) => {
 
 // returns an INT of the number of reports in the system
 export async function getReports() {
-  
+  //const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzAxMTIxNzU1LCJleHAiOjE3MDM3MTM3NTV9.LZS9y-F8LB_3V30BlNU1fAyu5V6pHqwfxeI79pTwwT8'; 
   const url = 'http://localhost:1337/api/reports/';
 
   const headers = {

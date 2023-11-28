@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { BsMicMute } from "react-icons/bs";
 import { message } from "antd";
 
-import { getStudent } from '../../Utils/requests.js';
+import { getReportCount } from '../../Utils/requests.js';
+
+let info = null;
 
 export default function MuteButton({ user, classroomId, isAdmin }) {
   // Todo: fetch flags from database using classroomId, do not initialize to 0
@@ -12,9 +14,24 @@ export default function MuteButton({ user, classroomId, isAdmin }) {
   function mute(user) {
     // Todo: Implement the mute functionality here, making a request to the backend
     
-    //getStudent("49").then(res);
     
-    console.log(user);
+    
+    getReportCount().then(data => {
+    // Handle the data or perform actions with the returned data
+    info = data
+    console.log('Received data:', data);
+  })
+  .catch(error => {
+    // Handle errors
+    console.error('Error fetching data:', error);
+  });
+  
+  
+  
+  
+  
+    
+    console.log(info);
     // Show a message
     message.success(`User ${user} has been muted.`);
   }

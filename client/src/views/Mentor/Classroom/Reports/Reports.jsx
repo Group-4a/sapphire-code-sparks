@@ -7,25 +7,30 @@ import PropTypes from "prop-types";
 // Backend API calls imports
 import { getReportCount, getReports } from '../../../../Utils/requests.js';
 let report_count = null;
-let reports_data = null;
 
-async function fetchReports() {
-
-  try {
-    reports_data = await getReports();
-    console.log('Received reports in Reports.jsx: ', reports_data);
-  } catch (error) {
-    console.error('Error fetching reports in Reports.jsx:', error);
-  }
-
-  console.log("Reports Variable : ", reports_data);
-}
+import { useEffect } from 'react';
 
 export default function Reports({ classroomId }) {
   
-  fetchReports();
+  console.log(classroomId);
   
-  console.log('WE GOOD:', reports_data);
+  const [reportsData, setReportsData] = useState(null);
+
+  useEffect(() => {
+    const loadReportsData = async () => {
+      try {
+        const temp = await getReports();
+        setReportsData(temp);
+      } catch (error) {
+        console.error('Error fetching reports in Reports.jsx:', error);
+        setReportsData(null);
+      }
+    };
+
+    loadReportsData();
+  }, [classroomId]);
+  
+  console.log('WE GOOD:', reportsData);
   
   /*reports = [
     {
@@ -51,7 +56,7 @@ export default function Reports({ classroomId }) {
     },
   ];*/
 
-  const [reportsData, setReportsData] = useState(reports_data);
+  //const [reportsData, setReportsData] = useState(reports_data);
 
   const [hiddenMutedUsers, setHiddenMutedUsers] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
