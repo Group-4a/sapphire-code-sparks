@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "reports",
+  "info": {
+    "name": "reports",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "key": {
+      "type": "string"
+    },
+    "user": {
+      "type": "string"
+    },
+    "reason": {
+      "type": "string"
+    },
+    "post": {
+      "type": "string"
+    },
+    "muted": {
+      "type": "json"
+    }
+  }
+}
