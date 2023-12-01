@@ -1,72 +1,51 @@
 import React, { useState } from "react";
 import { BsMicMute } from "react-icons/bs";
-import { message, Modal } from "antd";
+import { message } from "antd";
+import { updateReport, getStudent } from '../../Utils/requests.js';
 
-import { getStudent } from '../../Utils/requests.js';
+export default function StudentMuteButton({ user, reportedUser, reportId, initialState }) {
+  const [isMuted, setIsMuted] = useState(initialState);
 
-export default function MuteButton({ studentId, classroomId, isStudent, studentAnimal }) {
-  const [mutes, setMutes] = useState(0);
-  const threshold = 3;//Implement variable threshold eventually
-  //Lowered base from 5 to 3 for student muting since students should not 
-  //be able to mute too many people
+  async function handleMuteChange() {
+    try {
+      // Get the current report data
+      const reportResponse = await getStudent(reportedUser);
+      const report = reportResponse.data;
 
-  //Add confirm popup for student muting so it is not overused
-  const showConfirm = (action) => {
-    Modal.confirm({
-      title: `Confirm ${action}`,
-      content: `Are you sure you want to ${action.toLowerCase()} student ${studentId}?`,
-      onOk() {
-        if (action === "studentMute") {
-          studentMute(studentId);
-        } else if (action === "studentUnMute") {
-          studentUnMute(studentId);
-        }
-      },
-      onCancel() {
-        // Do nothing if canceled, popup only for confirming
-      },
-    });
-  };
+      // Update the muted users list
+      let updatedMutedUsers;
+      if (isMuted) {
+        // Unmute logic
+        updatedMutedUsers = report.muted.users.filter(mutedUser => mutedUser !== user);
+      } else {
+        // Mute logic
+        updatedMutedUsers = [...report.muted.users, user];
+      }
 
-  const studentMute = (studentId) => {
-    // Todo: Implement the mute functionality here, making a request to the backend
-    // getStudent("49").then(res);
+      // Update the report in the backend
+      const updatedReport = { ...report, muted: { ...report.muted, users: updatedMutedUsers }};
+      await updateReport(reportId, updatedReport);
 
-    console.log(studentId);
-    // Show a message
-    message.success(`Student ${studentAnimal} has been muted.`);
-  };
-
-  const studentUnMute = (studentId) => {
-    // Todo: Implement the unmute functionality here, making a request to the backend
-    console.log("student unmuted");
-    // Show a message
-    message.success(`Student ${studentAnimal} has been unmuted.`);
-  };
-
-  const handleClick = () => {
-    if (isStudent) {
-      setMutes((prevMutes) => {
-        const newMutes = prevMutes + 1;
-        if (newMutes === threshold) {
-          showConfirm();
-        }
-        return newMutes;
-      });
+      // Update local state
+      setIsMuted(!isMuted);
+      message.success(`User ${user} has been ${isMuted ? 'unmuted' : 'muted'}.`);
+    } catch (error) {
+      console.error("Error updating report:", error);
+      message.error(`Failed to ${isMuted ? 'unmute' : 'mute'} user.`);
     }
-  };
+  }
 
   return (
     <BsMicMute
-      id="mute"
+      id="flag"
       style={{
         width: "15px",
         height: "15px",
-        color: mutes >= threshold ? "red" : "grey",
-        cursor: isStudent ? "pointer" : "not-allowed",
+        color: isMuted ? "red" : "grey",
+        cursor: "pointer",
       }}
-      onClick={isStudent ? handleClick : null}
-      title={mutes >= threshold ? "Mute threshold reached" : "Student has been muted"}
+      onClick={handleMuteChange}
+      title={isMuted ? "User has been muted" : "Flag user"}
     />
   );
 }

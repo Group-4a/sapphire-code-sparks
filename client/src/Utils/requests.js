@@ -7,9 +7,6 @@ const PUT = 'PUT';
 const POST = 'POST';
 const DELETE = 'DELETE';
 
-// Copy your token from http://localhost:1337/admin/plugins/documentation and paste it here
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzAxMTIxNzU1LCJleHAiOjE3MDM3MTM3NTV9.LZS9y-F8LB_3V30BlNU1fAyu5V6pHqwfxeI79pTwwT8'; 
-
 // all request functions should utilize makeRequest and return an obj with structure {data, err}
 const makeRequest = async ({ method, path, data, auth = false, error }) => {
   let res = null;
@@ -48,121 +45,62 @@ const makeRequest = async ({ method, path, data, auth = false, error }) => {
 };
 
 // returns an INT of the number of reports in the system
-export async function getReports() {
-  //const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzAxMTIxNzU1LCJleHAiOjE3MDM3MTM3NTV9.LZS9y-F8LB_3V30BlNU1fAyu5V6pHqwfxeI79pTwwT8'; 
-  const url = 'http://localhost:1337/api/reports/';
-
-  const headers = {
-    'Content-Type': 'application/json',
-    'Connection': 'keep-alive',
-    'Authorization': `Bearer ${token}`,
-    'Keep-Alive': 'timeout=5'
-  };
-
-  const requestOptions = {
-    method: 'GET',
-    headers: headers
-  };
-
-  try {
-    const response = await fetch(url, requestOptions);
-
-    if (!response.ok) {
-      throw new Error(`Error: ${response.status} - ${response.statusText}`);
-    }
-
-    const data = await response.json();
-    console.log('Reports data:', data);
-    return data; // You can handle the data as needed
-  } catch (error) {
-    console.error('Error fetching reports data:', error);
-    // Handle errors appropriately
-    return null;
-  }
-}
+export const getReports = async () =>
+  makeRequest({
+    method: GET,
+    path: `${server}/reports`,
+    auth: true,
+    error: 'Reports could not be retrieved.',
+  });
 
 // returns an INT of the number of reports in the system
-export async function getReportCount() {
-  
-  const url = 'http://localhost:1337/api/reports/count';
+export const getReportCount = async () =>
+  makeRequest({
+    method: GET,
+    path: `${server}/reports/count`,
+    auth: true,
+    error: 'Report count could not be retrieved.',
+  });
 
-  const headers = {
-    'Content-Type': 'application/json',
-    'Connection': 'keep-alive',
-    'Authorization': `Bearer ${token}`
+export const deleteReports = async (reportId) => {
+    return makeRequest({
+      method: DELETE,
+      path: `${server}/reports/${reportId}`,
+      auth: true,
+      error: 'Failed to delete report.',
+    });
   };
-
-  const requestOptions = {
-    method: 'GET',
-    headers: headers
-  };
-
-  try {
-    const response = await fetch(url, requestOptions);
-
-    if (!response.ok) {
-      throw new Error(`Error: ${response.status} - ${response.statusText}`);
-    }
-
-    const data = await response.json();
-    console.log('Count data:', data);
-    return data; // You can handle the data as needed
-  } catch (error) {
-    console.error('Error fetching data:', error);
-    // Handle errors appropriately
-    return null;
-  }
-}
 
 // name == string
 // id == int
 // reason == string
-export async function createReport(name, id, reason) {
 
-  const url = 'http://localhost:1337/api/reports';
-
-  const data = {
-    "created_by": "Teacher",
-    "updated_by": "Teacher",
-    "student_name": name,
-    "student_id": id,
-    "report_reason": reason
+export const createReport = async (name, id, reason) => {
+    return makeRequest({
+      method: POST,
+      path: `${server}/reports`,
+      data: {
+        created_by: 'Teacher',
+        updated_by: 'Teacher',
+        student_name: name,
+        student_id: id,
+        report_reason: reason,
+      },
+      auth: true,
+      error: 'Failed to create report.',
+    });
   };
 
-  const headers = {
-    'Accept': 'application/json',
-    'Authorization': `Bearer ${token}`,
-    'Connection': 'keep-alive',
-    'Content-Type': 'application/json',
-    'accept': 'application/json'
-  };
-
-  const requestOptions = {
-    method: 'POST',
-    headers: headers,
-    body: JSON.stringify(data)
-  };
+export const updateReport = async (reportId, report) => {
+    return makeRequest({
+      method: PUT,
+      path: `${server}/reports/${reportId}`,
+      data: report,
+      auth: true,
+      error: 'Failed to update report.',
+    });
   
-
-  try {
-      console.log('Sending data:', requestOptions); // Log the data being sent
-    const response = await fetch(url, requestOptions);
-
-    if (!response.ok) {
-      throw new Error(`Error: ${response.status} - ${response.statusText}`);
-    }
-
-    const responseData = await response.json();
-    console.log('Report sent successfully:', responseData);
-    // You can handle the response data as needed
-    return responseData;
-  } catch (error) {
-    console.error('Error sending report:', error);
-    // Handle errors appropriately
-    return null;
-  }
 }
-
 
 // This is a testing function please ignore it
 export async function getCountWithToken() {

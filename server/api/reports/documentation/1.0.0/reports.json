@@ -516,13 +516,11 @@
     "schemas": {
       "Reports": {
         "required": [
-          "id"
+          "id",
+          "isServerMuted"
         ],
         "properties": {
           "id": {
-            "type": "string"
-          },
-          "key": {
             "type": "string"
           },
           "user": {
@@ -536,6 +534,13 @@
           },
           "muted": {
             "type": "object"
+          },
+          "isServerMuted": {
+            "type": "boolean",
+            "default": false
+          },
+          "count": {
+            "type": "integer"
           },
           "published_at": {
             "type": "string",
@@ -544,10 +549,10 @@
         }
       },
       "NewReports": {
+        "required": [
+          "isServerMuted"
+        ],
         "properties": {
-          "key": {
-            "type": "string"
-          },
           "user": {
             "type": "string"
           },
@@ -559,6 +564,13 @@
           },
           "muted": {
             "type": "object"
+          },
+          "isServerMuted": {
+            "type": "boolean",
+            "default": false
+          },
+          "count": {
+            "type": "integer"
           },
           "published_at": {
             "type": "string",

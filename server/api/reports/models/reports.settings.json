@@ -11,9 +11,6 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "key": {
-      "type": "string"
-    },
     "user": {
       "type": "string"
     },
@@ -25,6 +22,15 @@
     },
     "muted": {
       "type": "json"
+    },
+    "isServerMuted": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "count": {
+      "type": "integer",
+      "min": 1
     }
   }
 }

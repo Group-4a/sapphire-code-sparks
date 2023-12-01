@@ -1,81 +1,108 @@
-import React, { useState } from "react";
-import MuteButton from "../../../../components/Reporting/Muting";
+import React, { useState, useEffect } from "react";
+import MuteButton from "../../../../components/Reporting/ServerMuting";
 import { Table, Space, Tag, Modal, Button } from "antd";
 import testImage from "../../../../assets/test.jpg";
 import PropTypes from "prop-types";
-
-// Backend API calls imports
-import { getReportCount, getReports } from '../../../../Utils/requests.js';
-let report_count = null;
-
-import { useEffect } from 'react';
+import BlocklyPage from "../../../BlocklyPage/BlocklyPage";
+import "./Reports.less";
+import {
+  getSaves,
+  getReports,
+  deleteReports,
+  updateReport,
+} from "../../../../Utils/requests";
 
 export default function Reports({ classroomId }) {
-  
+  // const [reportsData, setReportsData] = useState([
+  //   {
+  //     id: "1",
+  //     user: "John Doe",
+  //     reason: "Inappropriate language",
+  //     post: "This is the post content for report 1.",
+  //     isServerMuted: false,
+  //     muted: ["Jane Smith", "Bill Bob"],
+  //   },
+  //   {
+  //     id: "2",
+  //     user: "Jane Smith",
+  //     reason: "Inappropriate thumbnail",
+  //     post: "This is the post content for report 2.",
+  //     isServerMuted: false,
+  //     muted: [],
+  //   },
+  //   {
+  //     id: "3",
+  //     user: "Bill Bob",
+  //     reason: "Bullying",
+  //     post: "This is the post content for report 3.",
+  //     isServerMuted: false,
+  //     muted: ["John Doe"],
+  //   },
+  // ]);
+
   console.log(classroomId);
-  
+
   const [reportsData, setReportsData] = useState(null);
 
   useEffect(() => {
     const loadReportsData = async () => {
       try {
         const temp = await getReports();
-        setReportsData(temp);
+        setReportsData(temp.data);
       } catch (error) {
-        console.error('Error fetching reports in Reports.jsx:', error);
+        console.error("Error fetching reports in Reports.jsx:", error);
         setReportsData(null);
       }
     };
 
     loadReportsData();
   }, [classroomId]);
-  
-  console.log('WE GOOD:', reportsData);
-  
-  /*reports = [
-    {
-      key: "1",
-      user: "John Doe",
-      reason: "Inappropriate language",
-      post: "This is the post content for report 1.",
-      muted: ["Jane Smith", "Bill Bob"],
-    },
-    {
-      key: "2",
-      user: "Jane Smith",
-      reason: "Inappropriate thumbnail",
-      post: "This is the post content for report 2.",
-      muted: [],
-    },
-    {
-      key: "3",
-      user: "Bill Bob",
-      reason: "Bullying",
-      post: "This is the post content for report 3.",
-      muted: ["John Doe"],
-    },
-  ];*/
 
-  //const [reportsData, setReportsData] = useState(reports_data);
+  console.log("WE GOOD:", reportsData);
 
   const [hiddenMutedUsers, setHiddenMutedUsers] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedPost, setSelectedPost] = useState("");
 
-  const updateMutedUsers = (userId, mutedUser) => {
+  const updateMutedUsers = async (reportId, mutedUser) => {
     const updatedData = reportsData.map((report) => {
-      if (report.key === userId) {
-        const updatedMuted = report.muted.filter((user) => user !== mutedUser);
-        return { ...report, muted: updatedMuted };
+      if (report.id === reportId) {
+        // Check if report has a muted object and a users array inside it
+        const mutedUsers =
+          report.muted && report.muted.users ? report.muted.users : [];
+        const updatedMutedUsers = mutedUsers.filter(
+          (user) => user !== mutedUser
+        );
+
+        // Create an updated report object with the new list of muted users
+        const updatedReport = {
+          ...report,
+          muted: { ...report.muted, users: updatedMutedUsers },
+        };
+
+        // Update the report in the backend
+        updateReport(reportId, updatedReport)
+          .then(() => {
+            console.log("Report updated successfully");
+            console.log(updatedReport);
+          })
+          .catch((error) => {
+            console.error("Error updating report:", error);
+          });
+
+        return updatedReport;
       }
       return report;
     });
+
     setReportsData(updatedData);
   };
 
   const toggleHideMutedUser = (user) => {
     if (hiddenMutedUsers.includes(user)) {
-      setHiddenMutedUsers(hiddenMutedUsers.filter((hiddenUser) => hiddenUser !== user));
+      setHiddenMutedUsers(
+        hiddenMutedUsers.filter((hiddenUser) => hiddenUser !== user)
+      );
     } else {
       setHiddenMutedUsers([...hiddenMutedUsers, user]);
     }
@@ -91,6 +118,11 @@ export default function Reports({ classroomId }) {
   };
 
   const columns = [
+    {
+      title: "Report ID",
+      dataIndex: "id",
+      key: "id",
+    },
     {
       title: "User",
       dataIndex: "user",
@@ -114,56 +146,80 @@ export default function Reports({ classroomId }) {
       },
     },
     {
+      title: "Students That Muted User",
+      dataIndex: "muted",
+      key: "muted",
+      render: (muted, record) => (
+        <Space>
+          {muted && muted.users && muted.users.length > 0 ? (
+            muted.users.map((user) => (
+              <Tag
+                key={user}
+                color="blue"
+                onClick={() => updateMutedUsers(record.id, user)}
+                style={{ cursor: "pointer" }}
+              >
+                {user}
+              </Tag>
+            ))
+          ) : (
+            <span>No muted users</span>
+          )}
+        </Space>
+      ),
+    },
+    {
       title: "View Post",
       dataIndex: "post",
       key: "post",
+      width: "10%",
+      align: "center",
       render: (text, record) => (
-        <Button onClick={() => handleViewPostClick(record.post)}>
-          View
-        </Button>
+        <Button onClick={() => handleViewPostClick(record.post)}>View</Button>
       ),
     },
     {
       title: "Mute User",
       key: "actions",
+      width: "10%",
+      align: "center",
       render: (text, record) => (
         <MuteButton
-          user={record.key}
-          classroomId={classroomId}
-          isAdmin={true}
-          onMuted={(mutedUser) => updateMutedUsers(record.key, mutedUser)}
+          reportId={record.id}
+          user={record.user}
+          isServerMuted={record.isServerMuted}
         />
       ),
     },
-    /*{
-      title: "Students Muted by User",
-      dataIndex: "muted",
-      key: "muted",
-      render: (muted, record) => (
-        <Space>
-          {muted.length > 0 ? (
-            muted.map((user) => (
-              <Tag
-                key={user}
-                color="blue"
-                onClick={() => toggleHideMutedUser(user)}
-                style={{
-                  cursor: "pointer",
-                  textDecoration: hiddenMutedUsers.includes(user)
-                    ? "line-through"
-                    : "none",
-                }}
-              >
-                {hiddenMutedUsers.includes(user) ? "Unmuted" : user}
-              </Tag>
-            ))
-          ) : (
-            <span></span>
-          )}
-        </Space>
+    {
+      title: "Remove",
+      key: "remove",
+      width: "10%",
+      align: "center",
+      render: (text, record) => (
+        <Button
+          onClick={async () => {
+            try {
+              await deleteReports(record.id);
+              const updatedReports = reportsData.filter(
+                (report) => report.id !== record.id
+              );
+              setReportsData(updatedReports);
+            } catch (error) {
+              console.error("Error deleting report:", error);
+            }
+          }}
+          style={{ backgroundColor: "#ff4d4f", color: "white" }}
+        >
+          Remove
+        </Button>
       ),
-    },*/
+    },
   ];
+
+  // For connecting post data to backend
+  // const res = getSaves(activityId);
+  // localStorage.setItem("my-activity", JSON.stringify(res.data));
 
   // Renders the table from other components
   return (
@@ -176,18 +232,15 @@ export default function Reports({ classroomId }) {
 
         <Modal
           title="Reported Post"
-          visible={modalVisible}
+          open={modalVisible}
           onCancel={handleModalCancel}
           footer={null}
+          bodyStyle={{ maxHeight: "70vh", maxWidth: "60vh", width: "60vh" }}
         >
-          <p>
-            {selectedPost}
-            <img
-                  src={testImage}
-                  alt="Sample Image"
-                  style={{ width: "100%", height: "auto", marginTop: "10px" }}
-                />
-            </p>
+          <p>{selectedPost}</p>
+          <div className="small-blockly-page">
+            <BlocklyPage isSandbox={false} />
+          </div>
         </Modal>
       </div>
     </div>
