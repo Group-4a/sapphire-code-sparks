@@ -84,7 +84,7 @@ export default function FlagButton({ user, threshold }) {
   );
 }
 
-Flagging.propTypes = {
+FlagButton.propTypes = {
   user: PropTypes.string,
   threshold: PropTypes.number,
 };

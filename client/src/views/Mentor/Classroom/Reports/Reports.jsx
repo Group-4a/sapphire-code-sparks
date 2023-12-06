@@ -29,8 +29,6 @@ export default function Reports({ classroomId }) {
     loadReportsData();
   }, [classroomId]);
 
-
-  const [hiddenMutedUsers, setHiddenMutedUsers] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedPost, setSelectedPost] = useState("");
 
@@ -113,7 +111,7 @@ export default function Reports({ classroomId }) {
         <Space>
           {muted?.users && muted.users.length > 0 ? (
             muted.users.map((user) => (
-              <Tag
+              <Tag  
                 key={user}
                 color="blue"
                 onClick={() => updateMutedUsers(record.id, user)}
