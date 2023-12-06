@@ -62,6 +62,7 @@ export const getReportCount = async () =>
     error: 'Report count could not be retrieved.',
   });
 
+// delete a report by id
 export const deleteReports = async (reportId) => {
     return makeRequest({
       method: DELETE,
@@ -71,10 +72,7 @@ export const deleteReports = async (reportId) => {
     });
   };
 
-// name == string
-// id == int
-// reason == string
-
+// create a report with the given data
 export const createReport = async (name, id, reason) => {
     return makeRequest({
       method: POST,
@@ -91,6 +89,7 @@ export const createReport = async (name, id, reason) => {
     });
   };
 
+// update a report by id with new report data
 export const updateReport = async (reportId, report) => {
     return makeRequest({
       method: PUT,

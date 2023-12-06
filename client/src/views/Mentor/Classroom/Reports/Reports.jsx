@@ -13,34 +13,6 @@ import {
 } from "../../../../Utils/requests";
 
 export default function Reports({ classroomId }) {
-  // const [reportsData, setReportsData] = useState([
-  //   {
-  //     id: "1",
-  //     user: "John Doe",
-  //     reason: "Inappropriate language",
-  //     post: "This is the post content for report 1.",
-  //     isServerMuted: false,
-  //     muted: ["Jane Smith", "Bill Bob"],
-  //   },
-  //   {
-  //     id: "2",
-  //     user: "Jane Smith",
-  //     reason: "Inappropriate thumbnail",
-  //     post: "This is the post content for report 2.",
-  //     isServerMuted: false,
-  //     muted: [],
-  //   },
-  //   {
-  //     id: "3",
-  //     user: "Bill Bob",
-  //     reason: "Bullying",
-  //     post: "This is the post content for report 3.",
-  //     isServerMuted: false,
-  //     muted: ["John Doe"],
-  //   },
-  // ]);
-
-  console.log(classroomId);
 
   const [reportsData, setReportsData] = useState(null);
 
@@ -58,7 +30,6 @@ export default function Reports({ classroomId }) {
     loadReportsData();
   }, [classroomId]);
 
-  console.log("WE GOOD:", reportsData);
 
   const [hiddenMutedUsers, setHiddenMutedUsers] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);

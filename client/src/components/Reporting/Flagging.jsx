@@ -5,10 +5,9 @@ import PropTypes from "prop-types";
 
 import { getReports, createReport, updateReport } from "./requests";
 
-export default function FlagButton({ user, reportedUser }) {
+export default function FlagButton({ user, reportedUser, threshold }) {
   const [flags, setFlags] = useState(0);
   const [visible, setVisible] = useState(false); // For controlling the visibility of the dropdown
-  let threshold = 5;
 
   // Helper function to find a user's report from all reports
   const findUserReport = (reports, userId) => {
