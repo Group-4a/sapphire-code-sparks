@@ -36,8 +36,7 @@ export default function Reports({ classroomId }) {
     const updatedData = reportsData.map((report) => {
       if (report.id === reportId) {
         // Check if report has a muted object and a users array inside it
-        const mutedUsers =
-          report.muted && report.muted.users ? report.muted.users : [];
+        const mutedUsers = report.muted?.users ?? [];
         const updatedMutedUsers = mutedUsers.filter(
           (user) => user !== mutedUser
         );
@@ -109,7 +108,7 @@ export default function Reports({ classroomId }) {
       key: "muted",
       render: (muted, record) => (
         <Space>
-          {muted?.users && muted.users.length > 0 ? (
+          {muted?.users?.length > 0 ? (
             muted.users.map((user) => (
               <Tag  
                 key={user}
