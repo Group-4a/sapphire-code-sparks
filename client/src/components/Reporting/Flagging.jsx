@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { BsFlag } from "react-icons/bs";
-import { message, Menu, Dropdown } from "antd";
+import { Menu, Dropdown } from "antd";
 import PropTypes from "prop-types";
 
 import { getReports, createReport, updateReport } from "./requests";
 
-export default function FlagButton({ user, reportedUser, threshold }) {
+export default function FlagButton({ user, threshold }) {
   const [flags, setFlags] = useState(0);
   const [visible, setVisible] = useState(false); // For controlling the visibility of the dropdown
 
@@ -86,6 +86,5 @@ export default function FlagButton({ user, reportedUser, threshold }) {
 
 Flagging.propTypes = {
   user: PropTypes.string,
-  classroomId: PropTypes.number,
-  isAdmin: PropTypes.bool,
+  threshold: PropTypes.number,
 };

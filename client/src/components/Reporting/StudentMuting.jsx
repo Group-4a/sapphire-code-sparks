@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { BsMicMute } from "react-icons/bs";
 import { message } from "antd";
 import { updateReport, getStudent } from '../../Utils/requests.js';
+import PropTypes from "prop-types";
 
 export default function StudentMuteButton({ user, reportedUser, reportId, initialState }) {
   const [isMuted, setIsMuted] = useState(initialState);
@@ -49,3 +50,11 @@ export default function StudentMuteButton({ user, reportedUser, reportId, initia
     />
   );
 }
+
+
+StudentMuteButton.propTypes = {
+  user: PropTypes.string,
+  reportedUser: PropTypes.string,
+  reportId: PropTypes.string,
+  initialState: PropTypes.bool
+};

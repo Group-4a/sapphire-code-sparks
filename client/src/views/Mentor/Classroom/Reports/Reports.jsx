@@ -6,7 +6,6 @@ import PropTypes from "prop-types";
 import BlocklyPage from "../../../BlocklyPage/BlocklyPage";
 import "./Reports.less";
 import {
-  getSaves,
   getReports,
   deleteReports,
   updateReport,
@@ -69,16 +68,6 @@ export default function Reports({ classroomId }) {
     setReportsData(updatedData);
   };
 
-  const toggleHideMutedUser = (user) => {
-    if (hiddenMutedUsers.includes(user)) {
-      setHiddenMutedUsers(
-        hiddenMutedUsers.filter((hiddenUser) => hiddenUser !== user)
-      );
-    } else {
-      setHiddenMutedUsers([...hiddenMutedUsers, user]);
-    }
-  };
-
   const handleViewPostClick = (post) => {
     setSelectedPost(post);
     setModalVisible(true);
@@ -122,7 +111,7 @@ export default function Reports({ classroomId }) {
       key: "muted",
       render: (muted, record) => (
         <Space>
-          {muted && muted.users && muted.users.length > 0 ? (
+          {muted?.users && muted.users.length > 0 ? (
             muted.users.map((user) => (
               <Tag
                 key={user}
