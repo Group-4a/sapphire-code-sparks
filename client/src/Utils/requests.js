@@ -44,6 +44,104 @@ const makeRequest = async ({ method, path, data, auth = false, error }) => {
   return { data: res, err: err };
 };
 
+// returns an INT of the number of reports in the system
+export const getReports = async () =>
+  makeRequest({
+    method: GET,
+    path: `${server}/reports`,
+    auth: true,
+    error: 'Reports could not be retrieved.',
+  });
+
+// returns an INT of the number of reports in the system
+export const getReportCount = async () =>
+  makeRequest({
+    method: GET,
+    path: `${server}/reports/count`,
+    auth: true,
+    error: 'Report count could not be retrieved.',
+  });
+
+// delete a report by id
+export const deleteReports = async (reportId) => {
+    return makeRequest({
+      method: DELETE,
+      path: `${server}/reports/${reportId}`,
+      auth: true,
+      error: 'Failed to delete report.',
+    });
+  };
+
+// create a report with the given data
+export const createReport = async (name, id, reason) => {
+    return makeRequest({
+      method: POST,
+      path: `${server}/reports`,
+      data: {
+        created_by: 'Teacher',
+        updated_by: 'Teacher',
+        student_name: name,
+        student_id: id,
+        report_reason: reason,
+      },
+      auth: true,
+      error: 'Failed to create report.',
+    });
+  };
+
+// update a report by id with new report data
+export const updateReport = async (reportId, report) => {
+    return makeRequest({
+      method: PUT,
+      path: `${server}/reports/${reportId}`,
+      data: report,
+      auth: true,
+      error: 'Failed to update report.',
+    });
+  
+}
+
+// This is a testing function please ignore it
+export async function getCountWithToken() {
+  
+  const url = 'http://localhost:1337/api/mods/count';
+
+  const headers = {
+    'Content-Type': 'application/json',
+    'Connection': 'keep-alive',
+    'Authorization': `Bearer ${token}`
+  };
+
+  const requestOptions = {
+    method: 'GET',
+    headers: headers
+  };
+
+  try {
+    const response = await fetch(url, requestOptions);
+
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status} - ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    console.log('Count data:', data);
+    return data; // You can handle the data as needed
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    // Handle errors appropriately
+    return null;
+  }
+}
+
+export const  getModCount = async () =>
+  makeRequest({
+    method: GET,
+    path: `${server}/mods/count`,
+    auth: true,
+    error: 'Mod could not be retrieved.',
+  });
+
 export const getActivities = async () =>
   makeRequest({
     method: GET,

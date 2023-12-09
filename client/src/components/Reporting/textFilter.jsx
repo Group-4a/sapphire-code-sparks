@@ -21,8 +21,11 @@ function filterBadWords(xmlText, badWords) {
                 node.nodeValue = filteredText;
             }
         } else if (node.nodeType === 1) { // Element node
-            for (let i = 0; i < node.childNodes.length; i++) {
-                traverseAndFilter(node.childNodes[i]);
+            // for (let i = 0; i < node.childNodes.length; i++) {
+            //     traverseAndFilter(node.childNodes[i]);
+            // }
+            for (let item of node.childNodes) {
+                traverseAndFilter(item);
             }
         }
     }

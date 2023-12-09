@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "reports",
+  "info": {
+    "name": "reports",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "user": {
+      "type": "string"
+    },
+    "reason": {
+      "type": "string"
+    },
+    "post": {
+      "type": "string"
+    },
+    "muted": {
+      "type": "json"
+    },
+    "isServerMuted": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "count": {
+      "type": "integer",
+      "min": 1
+    }
+  }
+}
