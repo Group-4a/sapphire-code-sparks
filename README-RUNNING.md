@@ -13,3 +13,6 @@ yarn
 
 yarn start
 ```
+
+We have found that github does not preserve the Strapi user roles, so in order to update that in Strapi go to: Settings -> Roles -> Classroom Manager 
+And under the Permissions tab click "Select all" for REPORTS.
