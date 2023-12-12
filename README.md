@@ -35,6 +35,10 @@ yarn
 yarn start
 ```
 
+We have found that github does not preserve the Strapi user roles, so in order to update that in strapi go to:
+Settings -> Roles -> Classroom Manager
+And under the Permissions tab click "Select all" for REPORTS.
+
 # How to update database and server connections
 Updating the Reports feild in the database is done through the Strapi API. You can use Swagger to view the implemented Reports API through the Strapi admin portal at http://localhost:1337/documentation/v1.0.0
 
