@@ -54,7 +54,7 @@ export default function MuteButton({ reportId, user, isServerMuted }) {
 }
 
 MuteButton.propTypes = {
-  reportId: PropTypes.string,
+  reportId: PropTypes.number,
   user: PropTypes.string,
   isServerMuted: PropTypes.bool
 };

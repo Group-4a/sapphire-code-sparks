@@ -7,6 +7,7 @@ import BlocklyPage from "../../../BlocklyPage/BlocklyPage";
 import "./Reports.less";
 import {
   getReports,
+  getClassroom,
   deleteReports,
   updateReport,
 } from "../../../../Utils/requests";
@@ -18,8 +19,9 @@ export default function Reports({ classroomId }) {
   useEffect(() => {
     const loadReportsData = async () => {
       try {
-        const temp = await getReports();
-        setReportsData(temp.data);
+        const temp = await getClassroom(classroomId);
+        setReportsData(temp.data.reports);
+        console.log(temp.data);
       } catch (error) {
         console.error("Error fetching reports in Reports.jsx:", error);
         setReportsData(null);

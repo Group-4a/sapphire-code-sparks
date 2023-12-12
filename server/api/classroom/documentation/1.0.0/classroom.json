@@ -1015,6 +1015,50 @@
                 }
               }
             }
+          },
+          "reports": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id",
+                "isServerMuted"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "user": {
+                  "type": "string"
+                },
+                "reason": {
+                  "type": "string"
+                },
+                "post": {
+                  "type": "string"
+                },
+                "muted": {
+                  "type": "object"
+                },
+                "isServerMuted": {
+                  "type": "boolean"
+                },
+                "count": {
+                  "type": "integer"
+                },
+                "classroom": {
+                  "type": "string"
+                },
+                "published_at": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
           }
         }
       },
@@ -1060,6 +1104,12 @@
             }
           },
           "authorized_workspaces": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "reports": {
             "type": "array",
             "items": {
               "type": "string"
