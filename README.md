@@ -8,10 +8,11 @@ Cloud-based programming interface
 ![Deploy Production](https://github.com/STEM-C/CaSMM/workflows/Deploy%20Production/badge.svg)
 
 # List of all project features implemented and associated screenshots of features developed
+Our main feature is the teacher moderation view page
 
 
 
-## Instructions for how to run the project locally 
+# Instructions for how to run the project locally 
 
 In order to run our project run the following commands.
 
@@ -30,6 +31,7 @@ yarn start
 ```
 
 # How to update database and server connections
+Updating the Reports feild in the database is done through the Strapi API. You can use Swagger to view the implemented Reports API through the Strapi admin portal at http://localhost:1337/documentation/v1.0.0
 
 # Outstanding work
 The bad word filter still needs to be integrated with the gallery. We could not do this because we did not have a gallery which we could implement with.
