@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 
 import { getReports, createReport, updateReport } from "./requests";
 
-export default function FlagButton({ user, threshold }) {
+export default function FlagButton({ user, threshold, classroomId }) {
   const [flags, setFlags] = useState(0);
   const [visible, setVisible] = useState(false); // For controlling the visibility of the dropdown
 
@@ -50,6 +50,7 @@ export default function FlagButton({ user, threshold }) {
       muted: {},
       isServerMuted: false,
       count: 1,
+      classroom: classroomId,
       published_at: new Date().toISOString(),
       created_by: "string",
       updated_by: "string",
@@ -87,4 +88,5 @@ export default function FlagButton({ user, threshold }) {
 FlagButton.propTypes = {
   user: PropTypes.string,
   threshold: PropTypes.number,
+  classroomId: PropTypes.number,
 };
