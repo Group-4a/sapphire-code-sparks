@@ -7,6 +7,25 @@ Cloud-based programming interface
 ![Deploy Staging](https://github.com/STEM-C/CaSMM/workflows/Deploy%20Staging/badge.svg)
 ![Deploy Production](https://github.com/STEM-C/CaSMM/workflows/Deploy%20Production/badge.svg)
 
+## RUNNING
+
+In order to run our project run the following commands.
+
+```console
+git clone https://github.com/Group-4a/sapphire-code-sparks/ 
+
+cd sapphire-code-sparks/
+
+docker compose up
+
+cd client/
+
+yarn
+
+yarn start
+```
+
+
 <br/>
 
 ## Application
