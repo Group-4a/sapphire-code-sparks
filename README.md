@@ -7,6 +7,54 @@ Cloud-based programming interface
 ![Deploy Staging](https://github.com/STEM-C/CaSMM/workflows/Deploy%20Staging/badge.svg)
 ![Deploy Production](https://github.com/STEM-C/CaSMM/workflows/Deploy%20Production/badge.svg)
 
+# List of all project features implemented and associated screenshots of features developed
+Our main feature is the teacher moderation view page. This page loads all post reports from the backend and displays them for the teacher to take appropriate action.
+
+![Image 1](https://github.com/Group-4a/sapphire-code-sparks/blob/develop/image/1.png)
+
+![Image 2](https://github.com/Group-4a/sapphire-code-sparks/blob/develop/image/2.png)
+
+![Image 3](https://github.com/Group-4a/sapphire-code-sparks/blob/develop/image/3.png)
+
+
+# Instructions for how to run the project locally 
+
+In order to run our project run the following commands.
+
+```console
+git clone https://github.com/Group-4a/sapphire-code-sparks/ 
+
+cd sapphire-code-sparks/
+
+docker compose up
+
+cd client/
+
+yarn
+
+yarn start
+```
+
+We have found that github does not preserve the Strapi user roles, so in order to update that in strapi go to:
+Settings -> Roles -> Classroom Manager
+And under the Permissions tab click "Select all" for REPORTS.
+
+# How to update database and server connections
+Updating the Reports feild in the database is done through the Strapi API. You can use Swagger to view the implemented Reports API through the Strapi admin portal at http://localhost:1337/documentation/v1.0.0
+
+# Outstanding work
+The bad word filter still needs to be integrated with the gallery. We could not do this because we did not have a gallery which we could implement with.
+
+# Built Upon 
+- Docker
+- Strapi
+- Node JS
+- JavaScript
+- React
+
+# Update the database and STRAPI dump files in your file directory
+Please note that the bash script for dumping the database did not work for us. And we could not get it working. So this was not done.
+
 <br/>
 
 ## Application
