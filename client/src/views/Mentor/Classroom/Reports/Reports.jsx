@@ -6,7 +6,6 @@ import PropTypes from "prop-types";
 import BlocklyPage from "../../../BlocklyPage/BlocklyPage";
 import "./Reports.less";
 import {
-  getReports,
   getClassroom,
   deleteReports,
   updateReport,
