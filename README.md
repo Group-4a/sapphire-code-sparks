@@ -48,6 +48,8 @@ The bad word filter still needs to be integrated with the gallery. We could not 
 - JavaScript
 - React
 
+# Update the database and STRAPI dump files in your file directory
+Please note that the bash script for dumping the database did not work for us. And we could not get it working. So this was not done.
 
 <br/>
 
