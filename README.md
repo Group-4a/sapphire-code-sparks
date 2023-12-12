@@ -7,7 +7,11 @@ Cloud-based programming interface
 ![Deploy Staging](https://github.com/STEM-C/CaSMM/workflows/Deploy%20Staging/badge.svg)
 ![Deploy Production](https://github.com/STEM-C/CaSMM/workflows/Deploy%20Production/badge.svg)
 
-## RUNNING
+# List of all project features implemented and associated screenshots of features developed
+
+
+
+## Instructions for how to run the project locally 
 
 In order to run our project run the following commands.
 
@@ -24,6 +28,18 @@ yarn
 
 yarn start
 ```
+
+# How to update database and server connections
+
+# Outstanding work
+The bad word filter still needs to be integrated with the gallery. We could not do this because we did not have a gallery which we could implement with.
+
+# Built Upon 
+- Docker
+- Strapi
+- Node JS
+- JavaScript
+- React
 
 
 <br/>
