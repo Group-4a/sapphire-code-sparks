@@ -8,7 +8,7 @@ Cloud-based programming interface
 ![Deploy Production](https://github.com/STEM-C/CaSMM/workflows/Deploy%20Production/badge.svg)
 
 # List of all project features implemented and associated screenshots of features developed
-Our main feature is the teacher moderation view page
+Our main feature is the teacher moderation view page. This page loads all post reports from the backend and displays them for the teacher to take appropriate action.
 
 ![Image 1](https://github.com/Group-4a/sapphire-code-sparks/blob/develop/image/1.png)
 
